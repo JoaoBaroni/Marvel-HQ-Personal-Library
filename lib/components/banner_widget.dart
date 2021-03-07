@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hq_personal_library/utils/colors.dart';
 
 
 class BannerWidget extends StatelessWidget {
@@ -16,7 +17,7 @@ class BannerWidget extends StatelessWidget {
           Hero(
             tag: 'image${index}',
             child: ClipRRect(
-              child: Image.asset(imagePath ?? 'images/example_image.jpg'),
+              child: imagePath != null ? Image.network(imagePath, fit: BoxFit.fill, repeat: ImageRepeat.repeatY, height: 170, width: 170,) : Image.asset('images/example_image.jpg'),// : Image.asset('images/example_image.jpg'),
               borderRadius: BorderRadius.circular(10),
             ),
           ),
@@ -24,7 +25,7 @@ class BannerWidget extends StatelessWidget {
             child: IconButton(
               icon: Icon(
                 Icons.favorite,
-                color: Colors.red[500],
+                color: Colors.white54,
               ),
               onPressed: () => null,
             ),

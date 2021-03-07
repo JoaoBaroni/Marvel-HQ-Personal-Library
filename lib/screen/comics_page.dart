@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hq_personal_library/components/popular_creator.dart';
-import 'package:hq_personal_library/components/progress_dialog.dart';
-import 'package:hq_personal_library/helper/helper_methods.dart';
+import 'package:hq_personal_library/components/default_card_comic.dart';
+import 'package:hq_personal_library/controller/comics.dart';
 import 'package:hq_personal_library/model/comic.dart';
 import 'package:hq_personal_library/screen/search_page.dart';
 import 'package:hq_personal_library/utils/colors.dart';
@@ -16,7 +15,7 @@ class _ComicsPageState extends State<ComicsPage> {
   List<Comic> comicsList = [];
 
   void getComics() async {
-    List<Comic> comicsFound = await HelperMethods.getAllHQ(context);
+    List<Comic> comicsFound = await ComicsController.fetchAllComics();
 
     if (comicsFound.isNotEmpty) {
       setState(() {
@@ -75,7 +74,7 @@ class _ComicsPageState extends State<ComicsPage> {
                       separatorBuilder: (context, index) => SizedBox(
                         height: 10,
                       ),
-                      itemBuilder: (context, index) => PopularCreator(
+                      itemBuilder: (context, index) => DefaultCardComic(
                         index: index,
                         comic: comicsList[index],
                       ),

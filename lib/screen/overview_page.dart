@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hq_personal_library/components/creator_card.dart';
 import 'package:hq_personal_library/components/suggest_item.dart';
+import 'package:hq_personal_library/controller/comics.dart';
 import 'package:hq_personal_library/helper/helper_methods.dart';
+import 'package:hq_personal_library/provider/app_data.dart';
+import 'package:hq_personal_library/utils/colors.dart';
+import 'package:provider/provider.dart';
 
 
 class OverviewPage extends StatefulWidget {
@@ -19,7 +23,7 @@ class _OverviewPageState extends State<OverviewPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    HelperMethods.getAllHQ(context);
+    ComicsController.fetchAllComics();
   }
 
   @override
@@ -27,6 +31,7 @@ class _OverviewPageState extends State<OverviewPage> {
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
           Container(
@@ -53,52 +58,30 @@ class _OverviewPageState extends State<OverviewPage> {
             ),
           ),
           Container(
-            height: 300,
+            color: kAccentColor,
+            height: MediaQuery.of(context).size.height * 0.33,
+            width: MediaQuery.of(context).size.width,
             child: Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: SizedBox(
-                  height: 300,
-                  child: ListView.builder(
-                      itemBuilder: (context, index) =>
-                          Row(children: [SuggestItem(index: index,)]),
-                      itemCount: numberTeste.length,
-                      scrollDirection: Axis.horizontal),
-                )),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      'Popular Creators',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 20),
-                    ),
-                    Expanded(
-                      child: Container(),
-                    ),
-                    FlatButton(onPressed: () => null, child: Text('See more'))
-                  ],
-                ),
-                Column(
-                  children: [
-                    SizedBox(
-                      height: 100,
-                      child: ListView.builder(
-                          itemBuilder: (context, index) =>
-                              Row(children: [CreatorCard()]),
-                          itemCount: numberTeste.length,
-                          scrollDirection: Axis.horizontal),
-                    ),
-                  ],
-                ),
-              ],
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Your favorite comics', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),),
+                  SizedBox(height: 15),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.25,
+                    child: Provider.of<AppData>(context, listen: true).favoriteComics.length > 0 ?ListView.builder(
+                        itemBuilder: (context, index) =>
+                            Row(children: [SuggestItem(index: index, comic: Provider.of<AppData>(context, listen: true).favoriteComics[index],)]),
+                        itemCount: Provider.of<AppData>(context, listen: true).favoriteComics.length,
+                        scrollDirection: Axis.horizontal) : Center(child: Text('Mark your favorites comics then we\'ll show them here :)', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700), textAlign: TextAlign.center,),),
+                  ),
+                ],
+              ),
             ),
           ),
+
+
         ],
       ),
     );

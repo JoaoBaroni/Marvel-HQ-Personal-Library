@@ -7,6 +7,7 @@ import 'package:hq_personal_library/screen/comics_page.dart';
 import 'package:hq_personal_library/screen/hq_detail_page.dart';
 import 'package:hq_personal_library/utils/colors.dart';
 
+import 'creators_page.dart';
 import 'overview_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -19,7 +20,6 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   GlobalKey<ScaffoldState> _scaffoldState = GlobalKey<ScaffoldState>();
 
-
   List<BottomNavigationBarItem> bottomNavigationItens = [
     BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
     BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.book), label: 'HQ\'s'),
@@ -31,9 +31,11 @@ class _MainPageState extends State<MainPage> {
     OverviewPage(),
     ComicsPage(),
     CharacterPage(),
+    CreatorsPage()
   ];
+
   int currentPage = 0;
-  final PageStorageBucket bucket = PageStorageBucket();
+  PageStorageBucket bucket = PageStorageBucket();
 
   void changePage(int newIndex){
     setState(() {
@@ -69,9 +71,10 @@ class _MainPageState extends State<MainPage> {
             changePage(value);
           },
           items: bottomNavigationItens),
-      body: PageStorage(
-        bucket: bucket,
-        child: pages[currentPage],
+      body: IndexedStack(
+        index: currentPage,
+        children: pages,
+
       ),
     );
   }

@@ -1,9 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:hq_personal_library/controller/characters.dart';
+import 'package:hq_personal_library/controller/comics.dart';
 import 'package:hq_personal_library/helper/helper_methods.dart';
 import 'package:hq_personal_library/model/character.dart';
 import 'package:hq_personal_library/model/creator.dart';
 import 'package:hq_personal_library/model/thumbnail.dart';
+import 'package:hq_personal_library/utils/typesEnum.dart';
 
 class Comic {
   int id;
@@ -14,7 +17,7 @@ class Comic {
   Thumbnail thumbnail;
   String serie;
   List<Thumbnail> galeryImages;
-  List<Creator> creator;
+  List<String> creator;
   List<String> charactersEndPoints;
   List<Character> charactersList;
 
@@ -31,7 +34,7 @@ class Comic {
 
   Future<void> verifiyCharacters() async{
     if(charactersEndPoints != null){
-      charactersList = await HelperMethods.gotURLCharacter(charactersEndPoints);
+      charactersList = await CharacterController.fetchCharactersByProvidedURL(charactersEndPoints);
     }
 
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hq_personal_library/components/creator_card.dart';
-import 'package:hq_personal_library/components/popular_creator.dart';
+import 'package:hq_personal_library/components/default_card_comic.dart';
 import 'package:hq_personal_library/components/suggest_item.dart';
 import 'package:hq_personal_library/model/character.dart';
 import 'package:hq_personal_library/model/comic.dart';
@@ -16,7 +16,8 @@ class HQDetailPage extends StatefulWidget {
   HQDetailPage({this.index, this.comic});
 
   @override
-  _HQDetailPageState createState() => _HQDetailPageState(index: index, comic: comic);
+  _HQDetailPageState createState() =>
+      _HQDetailPageState(index: index, comic: comic);
 }
 
 class _HQDetailPageState extends State<HQDetailPage>
@@ -24,19 +25,7 @@ class _HQDetailPageState extends State<HQDetailPage>
   final int index;
   double bottomSheetHeight = 0;
   final Comic comic;
-
-  List<Widget> tabs = [
-    Tab(
-      text: 'About',
-    ),
-    Tab(
-      text: 'Characters',
-    ),
-    Tab(
-      text: 'Aditional Informations',
-    ),
-  ];
-
+  var hasCharactersFound;
 
   _HQDetailPageState({this.index, this.comic});
 
@@ -44,6 +33,7 @@ class _HQDetailPageState extends State<HQDetailPage>
   void initState() {
     super.initState();
     bottomSheetHeight = 400;
+    hasCharactersFound = comic.charactersList != null;
   }
 
   @override
@@ -79,93 +69,7 @@ class _HQDetailPageState extends State<HQDetailPage>
                     child: ListView(
                       controller: scrollController,
                       children: [
-                        Container(
-                          height: 700,
-                          decoration: BoxDecoration(
-                              color: kPrimaryColor,
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(15),
-                                  topRight: Radius.circular(15)),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black26,
-                                    blurRadius: 15.0,
-                                    spreadRadius: 0.5,
-                                    offset: Offset(0.7, 0.7))
-                              ]),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 15),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Expanded(
-                                      child: Container(
-                                        child: Text(comic.title,
-                                            textAlign: TextAlign.justify,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 20)),
-                                      ),
-                                    ),
-
-                                    IconButton(
-                                      icon: Icon(
-                                        Icons.favorite_border,
-                                        size: 20,
-                                      ),
-                                      onPressed: () => null,
-                                    ),
-                                  ],
-                                ),
-                                Container(
-                                  child: Column(
-                                    children: [
-                                      Text(comic.description, textAlign: TextAlign.justify,),
-                                      SizedBox(height: 10,),
-                                      Text('Serie: ${comic.serie ?? 'Not found'}'),
-                                      Text('ISBN: ${comic.isbn} '),
-                                      Text('Pages: ${comic.pageCount.toString()} '),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                Text(
-                                  'Characters',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 20),
-                                ),
-                                SizedBox(
-                                  height: comic.charactersList != null ? 20 : 10,
-                                ),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                        child: Container(
-                                            height: comic.charactersList != null ? 150 : 20,
-                                            child: comic.charactersList != null ? ListView.builder(
-                                              itemBuilder: (context, index) =>
-                                                  CharacterIcon(character: comic.charactersList[index],),
-                                              itemCount: comic.charactersList.length,
-                                              scrollDirection: Axis.horizontal,
-                                            ): Center(child: Text('No characters found'))))
-                                  ],
-                                ),
-                                Text(
-                                  'Created by Stan Lee',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 20),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                        contentPage(),
                       ],
                     ),
                   );
@@ -175,6 +79,116 @@ class _HQDetailPageState extends State<HQDetailPage>
               ),
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+  Container contentPage() {
+    return Container(
+      height: 700,
+      decoration: BoxDecoration(
+          color: kPrimaryColor,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(15), topRight: Radius.circular(15)),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.black26,
+                blurRadius: 15.0,
+                spreadRadius: 0.5,
+                offset: Offset(0.7, 0.7))
+          ]),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        child: Column(
+          children: [
+            headerPage(),
+            mainInformations(),
+            SizedBox(
+              height: 20,
+            ),
+            hasCharactersFound ? charactersInformations() : SizedBox(height: 10,),
+            Text(
+              'Created by Stan Lee',
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Container charactersInformations() {
+    return Container(
+            child: Column(
+              children: [Text(
+                'Characters',
+                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+              ),
+                SizedBox(
+                  height: comic.charactersList != null ? 20 : 10,
+                ),
+                charactersListView(),
+            ]),
+          );
+  }
+
+  Row headerPage() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Container(
+            child: Text(comic.title ?? 'Not found',
+                textAlign: TextAlign.justify,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
+          ),
+        ),
+        IconButton(
+          icon: Icon(
+            Icons.favorite_border,
+            size: 20,
+          ),
+          onPressed: () => null,
+        ),
+      ],
+    );
+  }
+
+  Row charactersListView() {
+    return Row(
+      children: [
+        Expanded(
+            child: Container(
+                height: comic.charactersList != null ? 150 : 20,
+                child: comic.charactersList != null
+                    ? ListView.builder(
+                        itemBuilder: (context, index) => CharacterIcon(
+                          character: comic.charactersList[index],
+                        ),
+                        itemCount: comic.charactersList.length,
+                        scrollDirection: Axis.horizontal,
+                      )
+                    : Center(child: Text('No characters was found'))))
+      ],
+    );
+  }
+
+  Container mainInformations() {
+    return Container(
+      child: Column(
+        children: [
+          Text(
+            comic.description ?? 'Description information not provided by API',
+            textAlign: TextAlign.justify,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text('Serie: ${comic.serie ?? 'Not found'}'),
+          Text('ISBN: ${comic.isbn ?? 'Information not provided by API'} '),
+          Text('Pages: ${comic.pageCount.toString() ?? '0'} '),
         ],
       ),
     );

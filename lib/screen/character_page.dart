@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hq_personal_library/components/banner_widget.dart';
-import 'package:hq_personal_library/components/popular_creator.dart';
+import 'package:hq_personal_library/components/default_card_comic.dart';
+import 'package:hq_personal_library/controller/characters.dart';
 import 'package:hq_personal_library/helper/helper_methods.dart';
 import 'package:hq_personal_library/model/character.dart';
+import 'package:hq_personal_library/screen/characters_detail_page.dart';
 import 'package:hq_personal_library/utils/colors.dart';
 import 'package:lottie/lottie.dart';
 
@@ -15,7 +17,7 @@ class _CharacterPageState extends State<CharacterPage> {
   List<Character> characterList = [];
 
   void getCharaters() async {
-    List<Character> charactersFound = await HelperMethods.getCharacters();
+    List<Character> charactersFound = await CharacterController.fetchAllCharacters();
 
     if (charactersFound.isNotEmpty) {
       setState(() {
@@ -88,7 +90,7 @@ class CharactersTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => null,
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => CharactersDetailPage(character: character,),)),
       child: Container(
         height: 170,
         child: Row(
@@ -96,8 +98,10 @@ class CharactersTile extends StatelessWidget {
             Expanded(
               child: Container(
                 child: BannerWidget(
-                  index: 1,
+                  index: index,
                   imagePath: character.thumbnail.fullPath,
+                  showFavorite: false,
+                  isFavorited: false,
                 ),
               ),
             ),

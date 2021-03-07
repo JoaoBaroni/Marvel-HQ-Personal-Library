@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hq_personal_library/components/default_card_comic.dart';
+import 'package:hq_personal_library/controller/comics.dart';
+import 'package:hq_personal_library/model/comic.dart';
 import 'package:hq_personal_library/utils/colors.dart';
 
 class SearchPage extends StatefulWidget {
@@ -8,6 +11,15 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   TextEditingController searchField = TextEditingController();
+  List<Comic> comicList = [];
+
+  void searchComic(String searchValue) async{
+    List<Comic> searchingList = [];
+    searchingList = await ComicsController.searchHQ(searchValue);
+    setState(() {
+      comicList = searchingList;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +29,7 @@ class _SearchPageState extends State<SearchPage> {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          'Find a character',
+          'Find a comic',
           style: TextStyle(color: kSecondaryColor),
         ),
         leading: IconButton(
@@ -48,8 +60,9 @@ class _SearchPageState extends State<SearchPage> {
                     margin: EdgeInsets.all(10),
                     child: TextField(
                       controller: searchField,
+                      onChanged: (value) => searchComic(value),
                       decoration: InputDecoration(
-                          hintText: 'Search ',
+                          hintText: 'Search a comic',
                           filled: true,
                           fillColor: kPrimaryColor,
                           border: InputBorder.none,
@@ -69,8 +82,12 @@ class _SearchPageState extends State<SearchPage> {
               ]),
             ),
             Expanded(
-              child: Container(
-                color: kPrimaryColor,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  child: ListView.separated(itemBuilder: (context, index) => DefaultCardComic(comic: comicList[index], index: index,), separatorBuilder: (context, index) => SizedBox(height: 10,), itemCount: comicList.length),
+
+                ),
               ),
             )
           ],

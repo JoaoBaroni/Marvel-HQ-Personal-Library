@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hq_personal_library/model/comic.dart';
 import 'package:hq_personal_library/screen/hq_detail_page.dart';
 
 import 'banner_widget.dart';
@@ -10,28 +11,31 @@ class SuggestItem extends StatelessWidget {
   final Function callBack;
   final String imagePath;
   final int index;
+  final Comic comic;
 
-  SuggestItem({this.imagePath, this.callBack, this.name, this.isFavorite, this.index});
+  SuggestItem({this.imagePath, this.callBack, this.name, this.isFavorite, this.index, this.comic});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: callBack ?? () => Navigator.push(context, MaterialPageRoute(builder: (context) => HQDetailPage(index: index ?? 0,),)),
+      onTap: callBack ?? () => Navigator.push(context, MaterialPageRoute(builder: (context) => HQDetailPage(index: index, comic: comic,),)),
       child: Padding(
         padding:
-        EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.04),
+        EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.035),
         child: Container(
-          width: MediaQuery.of(context).size.width * 0.4,
+          width: MediaQuery.of(context).size.width * 0.3,
           child: Column(
             children: [
-              BannerWidget(imagePath: imagePath, index: index,),
+              BannerWidget(imagePath: comic.thumbnail.fullPath, index: index, comic: comic, isFavorited: true, showFavorite: false,),
               SizedBox(
                 height: 4,
               ),
               Hero(
                 tag: 'title${index}',
                 child: Text(
-                  name ?? 'Iron Man',
+                  comic.title,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
                   style: TextStyle(fontWeight: FontWeight.w700),
                 ),
               )

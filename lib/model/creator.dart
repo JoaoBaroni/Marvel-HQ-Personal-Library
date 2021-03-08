@@ -27,11 +27,14 @@ class Creator{
     id = json['id'];
     firstName = json['firstName'];
     fullName = json['fullName'];
+    comicsAvaible = json['comics']['available'];
     thumbNail = Thumbnail(extension: json['thumbnail']['extension'], path: json['thumbnail']['path']);
     if(json['comics']['items'] != null){
       comicsUri = [];
       json['comics']['items'].forEach((e) => comicsUri.add(e['resourceURI']));
     }
+
+
 
   }
 

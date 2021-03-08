@@ -33,6 +33,10 @@ dependencies:
   provider: ^5.0.0
   crypto: ^3.0.0
   lottie: ^1.0.0
+  firebase_core: ^0.7.0
+  firebase_auth: ^0.20.0+1
+  firebase_database: ^6.0.0
+  connectivity: ^2.0.2
 
 dev_dependencies:
   flutter_test:

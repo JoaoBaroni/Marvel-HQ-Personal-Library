@@ -4,7 +4,8 @@ HQPersonal Library
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Por conta do tempo, algumas funcionalidades não foram aprontadas. 
+
 
 A few resources to get you started if this is your first Flutter project:
 

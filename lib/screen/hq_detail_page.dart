@@ -109,14 +109,16 @@ class _HQDetailPageState extends State<HQDetailPage>
             ),
             hasCharactersFound ? charactersInformations() : SizedBox(height: 10,),
             Text(
-              'Created by Stan Lee',
-              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+              comic.creator[0] == null ? 'Creator not defined' : 'Creator: ' + comic.creator[0] ,
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
             ),
           ],
         ),
       ),
     );
   }
+
+
 
   Container charactersInformations() {
     return Container(
@@ -144,13 +146,6 @@ class _HQDetailPageState extends State<HQDetailPage>
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
           ),
-        ),
-        IconButton(
-          icon: Icon(
-            Icons.favorite_border,
-            size: 20,
-          ),
-          onPressed: () => null,
         ),
       ],
     );

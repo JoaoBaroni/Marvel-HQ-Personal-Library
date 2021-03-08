@@ -32,10 +32,10 @@ class _CreatorsDetailPageState extends State<CreatorsDetailPage> {
         ),
         backgroundColor: kPrimaryColor,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Container(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
               width: double.infinity,
               decoration:  BoxDecoration(
                   color: kPrimaryColor,
@@ -51,24 +51,27 @@ class _CreatorsDetailPageState extends State<CreatorsDetailPage> {
                 children: [
                   CircleAvatar(
                     radius: 50,
+                    backgroundImage: NetworkImage(creator.thumbNail.fullPath),
                   ),
                   Text(
-                    'Name here',
+                    creator.fullName,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
-                  )
+                  ),
+                  SizedBox(height: 20,),
                 ],
               ),
             ),
-            flex: 1,
-          ),
-          Expanded(
-              child: Container(
+            Container(
+              child: Padding(
+                padding:  EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   children: [
-                    Text('Name here comics'),
+                    SizedBox(height: 20,),
+                    Text('Comics wroten by ${creator.fullName}', style: TextStyle(fontWeight: FontWeight.w700),),
+                    SizedBox(height: 20,),
                     ListView.separated(
-                        primary: false,
+                      primary: false,
                         shrinkWrap: true,
                         itemBuilder: (context, index) =>
                             DefaultCardComic(
@@ -80,8 +83,9 @@ class _CreatorsDetailPageState extends State<CreatorsDetailPage> {
                   ],
                 ),
               ),
-              flex: 4),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }

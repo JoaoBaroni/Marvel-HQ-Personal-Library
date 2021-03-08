@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "780845751170",
+    "firebase_url": "https://marvelhqlibrary-default-rtdb.firebaseio.com",
+    "project_id": "marvelhqlibrary",
+    "storage_bucket": "marvelhqlibrary.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:780845751170:android:294ef58d3cb38bf2b58d9b",
+        "android_client_info": {
+          "package_name": "com.joaovitor.hq_personal_library"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "780845751170-u5ae3fhv3c0705u9uk9ietr8gjcth184.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOOtQBN2it_VciZe-oTAtWBhA_2CBxiIU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "780845751170-u5ae3fhv3c0705u9uk9ietr8gjcth184.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

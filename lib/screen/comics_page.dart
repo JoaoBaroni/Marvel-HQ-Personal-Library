@@ -4,6 +4,7 @@ import 'package:hq_personal_library/controller/comics.dart';
 import 'package:hq_personal_library/model/comic.dart';
 import 'package:hq_personal_library/screen/search_page.dart';
 import 'package:hq_personal_library/utils/colors.dart';
+import 'package:hq_personal_library/utils/typesEnum.dart';
 import 'package:lottie/lottie.dart';
 
 class ComicsPage extends StatefulWidget {
@@ -37,7 +38,7 @@ class _ComicsPageState extends State<ComicsPage> {
           onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => SearchPage(),
+                builder: (context) => SearchPage(searchType: ObjectsTypeMarvel.COMICS,),
               )),
           child: Container(
             margin: EdgeInsets.symmetric(horizontal: 20),

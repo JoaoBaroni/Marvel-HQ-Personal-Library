@@ -54,5 +54,9 @@ class Comic {
       json['characters']['items'].forEach((e) => list.add(e['resourceURI']));
       charactersEndPoints = list;
     }
+    if(json['creators']['items'] != null){
+      creator = [];
+      json['creators']['items'].forEach((e) => creator.add(e['name']));
+    }
   }
 }

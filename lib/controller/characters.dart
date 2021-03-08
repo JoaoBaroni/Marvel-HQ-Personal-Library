@@ -9,7 +9,7 @@ class CharacterController {
   static Future<dynamic> fetchAllCharacters() async {
     var timestamp = DateTime.now().millisecondsSinceEpoch.toString();
     String hash = Utils.generateHash(timestamp);
-    var response = await RequestHelper.getRequest('${API_PATH}v1/public/characters?ts=${timestamp}&apikey=${PUBLIC_KEY_2}&hash=${hash}');
+    var response = await RequestHelper.getRequest('${API_PATH}v1/public/characters?ts=${timestamp}&apikey=${PUBLIC_KEY}&hash=${hash}');
 
     if (response == 'error') {
       return;
@@ -24,7 +24,7 @@ class CharacterController {
   static Future<dynamic> fetchSpecificCharacter(String characterID) async {
     var timestamp = DateTime.now().millisecondsSinceEpoch.toString();
     String hash = Utils.generateHash(timestamp);
-    var response = await RequestHelper.getRequest('${API_PATH}v1/public/characters/${characterID}?ts=${timestamp}&apikey=${PUBLIC_KEY_2}&hash=${hash}');
+    var response = await RequestHelper.getRequest('${API_PATH}v1/public/characters/${characterID}?ts=${timestamp}&apikey=${PUBLIC_KEY}&hash=${hash}');
 
     if (response == 'error') {
       return;
@@ -42,7 +42,7 @@ class CharacterController {
     url.forEach((element) async {
       var timestamp = DateTime.now().millisecondsSinceEpoch.toString();
       String hash = Utils.generateHash(timestamp);
-      var response = await RequestHelper.getRequest('${element}?ts=${timestamp}&apikey=${PUBLIC_KEY_2}&hash=${hash}');
+      var response = await RequestHelper.getRequest('${element}?ts=${timestamp}&apikey=${PUBLIC_KEY}&hash=${hash}');
 
       if (response == 'error') {
         print('error');
@@ -54,6 +54,21 @@ class CharacterController {
       }
     });
     return listWillBeReturned;
+  }
+
+  static Future<List<Character>> searchCharater(String query) async {
+    var timestamp = DateTime.now().millisecondsSinceEpoch.toString();
+    String hash = Utils.generateHash(timestamp);
+    var response = await RequestHelper.getRequest('${API_PATH}v1/public/characters?nameStartsWith=${query}&ts=${timestamp}&apikey=${PUBLIC_KEY}&hash=${hash}');
+
+    if (response == 'error') {
+      return [];
+    } else {
+      List<Character> list = [];
+      response['data']['results'].forEach((e) => list.add(Character.fromJson(e)));
+      list.forEach((element) async => await element.checkAvaibleComics());
+      return list;
+    }
   }
 
 

@@ -1,28 +1,59 @@
 import 'package:flutter/material.dart';
+import 'package:hq_personal_library/model/creator.dart';
+import 'package:hq_personal_library/screen/creators_detail_page.dart';
+import 'package:hq_personal_library/utils/colors.dart';
 
 
 class CreatorCard extends StatelessWidget {
-  const CreatorCard({
-    Key key,
-  }) : super(key: key);
+  final Creator creator;
+
+  CreatorCard({this.creator});
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => null,
-      child: Container(
-        margin: EdgeInsets.only(right: 10),
-        child: Center(child: Text('Stan Lee', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),),),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          image: DecorationImage(
-            image: AssetImage('images/stan_lee.jpg'),
-            fit: BoxFit.fill,
-            colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.7), BlendMode.dstATop),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: GestureDetector(
+        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => CreatorsDetailPage(creator: creator,),)),
+        child: Container(
+          height: 125,
+          decoration: BoxDecoration(
+              color: kPrimaryColor,
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 3.0,
+                    spreadRadius: 0.5,
+                    offset: Offset(0.7, 0.7))
+              ]),
+          child: Row(
+            children: [
+              Expanded(
+                  child: CircleAvatar(
+                    radius: 45,
+                    backgroundImage: NetworkImage(creator.thumbNail.fullPath),
+                  )),
+              Expanded(
+                flex: 2,
+                child: Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        creator.fullName ?? 'Not found',
+                        style: TextStyle(fontWeight: FontWeight.w700),
+                      ),
+                      Text('${creator.comicsAvaible ?? '0'}  comics'),
+                      Text('Comics saved'),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
-        height: 100,
-        width: 200,
       ),
     );
   }

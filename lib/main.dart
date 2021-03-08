@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hq_personal_library/provider/app_data.dart';
 import 'package:hq_personal_library/screen/hq_detail_page.dart';
+import 'package:hq_personal_library/screen/login_page.dart';
 import 'package:hq_personal_library/screen/main_page.dart';
 import 'package:provider/provider.dart';
 
@@ -22,9 +23,10 @@ class MyApp extends StatelessWidget {
         ),
         routes: {
           MainPage.id: (context) => MainPage(),
-          HQDetailPage.id: (context) => HQDetailPage()
+          HQDetailPage.id: (context) => HQDetailPage(),
+          LoginPage.id: (context) => LoginPage()
         },
-        initialRoute: MainPage.id,
+        initialRoute: LoginPage.id,
       ),
     );
   }

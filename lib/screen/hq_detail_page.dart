@@ -108,10 +108,6 @@ class _HQDetailPageState extends State<HQDetailPage>
               height: 20,
             ),
             hasCharactersFound ? charactersInformations() : SizedBox(height: 10,),
-            Text(
-              comic.creator[0] == null ? 'Creator not defined' : 'Creator: ' + comic.creator[0] ,
-              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
-            ),
           ],
         ),
       ),

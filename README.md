@@ -2,16 +2,8 @@
 
 HQPersonal Library
 
-## Getting Started
-
-Por conta do tempo, algumas funcionalidades não foram aprontadas. 
-
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+HQ Personal Library consultando API da Marvel.
+Algumas funcionalidades não ficaram aprontadas a tempo, tais como:
+Sistema de autenticação - Login (Tela fora criada, no entanto, uma autenticação real não foi feita).
+Listagem de criadores nas HQ's (Por conta do tempo, estou listando apenas um criador. A ideia seria, assim como os Personagens, lista-los com widgets).
+Sistema de criação de lista não foi aprontado.
